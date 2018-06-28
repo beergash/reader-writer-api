@@ -1,1 +1,1 @@
-# Common reader-writer-api to read and writer different format files
+# Common reader-writer-api to read and write different format files
