@@ -79,6 +79,14 @@ public class TestUtility {
 			sheet.setHeader(props.getProperty(prefixSheet + "header"));
 			sheet.setFooter(props.getProperty(prefixSheet + "footer"));
 			sheet.setSeparator(props.getProperty(prefixSheet + "separator"));
+			String typedDataClass = props.getProperty(prefixSheet + "typedDataClass");
+			if (typedDataClass != null) {
+				try {
+					sheet.setTypedDataClass(Class.forName(typedDataClass));
+				} catch (ClassNotFoundException e) {
+					log.error("cannot instantiate target typed class: " + typedDataClass, e);
+				}
+			}
 			List<ReportTrace> fields = new ArrayList<ReportTrace>();
 			configuredFieds.stream().forEach(f -> {
 				String prefixField = prefixSheet + f + ".";
@@ -88,7 +96,7 @@ public class TestUtility {
 				trace.setFieldName(props.getProperty(prefixField + "fieldName"));
 				trace.setDataType(DataType.valueOf(props.getProperty(prefixField + "dataType").toUpperCase()));
 				if (props.getProperty(prefixField + "fieldLength") != null) {
-				trace.setFieldLength(Integer.valueOf(props.getProperty(prefixField + "fieldLength")));
+					trace.setFieldLength(Integer.valueOf(props.getProperty(prefixField + "fieldLength")));
 				}
 				trace.setFillerCharacter(props.getProperty(prefixField + "fillerCharacter"));
 				trace.setPadType(props.getProperty(prefixField + "padType") == null ? null : props.getProperty(prefixField + "padType").toUpperCase());

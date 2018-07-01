@@ -16,6 +16,8 @@ public class ReportSheet {
 	private String footer;
 	private String separator;
 	private List<Map<String, Object>> data;
+	private List<? extends Object> typedData;
+	private Class<? extends Object> typedDataClass;
 	private List<ReportTrace> trace;
 	private Map<String, ExcelColumn> excelColumnProps = new HashMap<String, ExcelColumn>();
 
@@ -82,6 +84,22 @@ public class ReportSheet {
 
 	public void setData(List<Map<String, Object>> data) {
 		this.data = data;
+	}
+
+	public List<? extends Object> getTypedData() {
+		return typedData;
+	}
+
+	public void setTypedData(List<? extends Object> typedData) {
+		this.typedData = typedData;
+	}
+
+	public Class<? extends Object> getTypedDataClass() {
+		return typedDataClass;
+	}
+
+	public void setTypedDataClass(Class<? extends Object> typedDataClass) {
+		this.typedDataClass = typedDataClass;
 	}
 
 	/**

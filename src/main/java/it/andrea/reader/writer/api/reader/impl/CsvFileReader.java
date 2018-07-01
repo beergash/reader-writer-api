@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -25,9 +24,6 @@ import it.andrea.reader.writer.api.reader.model.Matcher;
 @Qualifier("csv")
 public class CsvFileReader extends TextFileReader {
 
-	@Autowired
-	private FileLoaderUtils loaderUtils;
-
 	protected void readLine(FileFeature fileFeature, String line, Map<String, FileResult> result, String header) throws FileReaderException {
 		for (FileSheet s : fileFeature.getSheets()) {
 			Object targetObject = null;
@@ -41,16 +37,16 @@ public class CsvFileReader extends TextFileReader {
 			String[] lineSplitted = line.split(s.getSeparator());
 			if (isRecordValidForSheet(lineSplitted, s.getValidationConditions())) {
 				for (FileTrace f : fields) {
-					Object value = loaderUtils.convertValue(lineSplitted[Integer.valueOf(f.getPosition()) - 1].trim(), f);
+					Object value = FileLoaderUtils.convertValue(lineSplitted[Integer.valueOf(f.getPosition()) - 1].trim(), f);
 					buildData(targetObject, row, f, value);
 				}
-				loaderUtils.managesResult(result, s, row, targetObject);
+				FileLoaderUtils.managesResult(result, s, row, targetObject);
 			}
 		}
 	}
 
 	private boolean isRecordValidForSheet(String[] lineSplitted, List<Matcher> validationConditions) {
-		return validationConditions.stream().allMatch(c -> loaderUtils.isRecordValid(lineSplitted[Integer.valueOf(c.getPosition()) - 1], c));
+		return validationConditions.stream().allMatch(c -> FileLoaderUtils.isMatched(lineSplitted[Integer.valueOf(c.getPosition()) - 1], c));
 	}
 
 }

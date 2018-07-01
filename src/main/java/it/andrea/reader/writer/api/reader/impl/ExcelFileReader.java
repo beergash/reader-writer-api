@@ -21,7 +21,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -42,9 +41,6 @@ import it.andrea.reader.writer.api.reader.model.FileTrace;
 @Service
 @Qualifier("excel")
 public class ExcelFileReader implements IFileReader {
-
-	@Autowired
-	private FileLoaderUtils loaderUtils;
 
 	@Override
 	public Map<String, FileResult> readFile(File file, FileFeature fileFeature) throws IOException, FileReaderException {
@@ -80,10 +76,10 @@ public class ExcelFileReader implements IFileReader {
 					for (FileTrace f : fields) {
 						Cell cell = excelRow.getCell(Integer.valueOf(f.getPosition()) - 1, MissingCellPolicy.CREATE_NULL_AS_BLANK);
 						String stringValue = getStringValueFromCell(cell, f);
-						Object value = loaderUtils.convertValue(stringValue, f);
+						Object value = FileLoaderUtils.convertValue(stringValue, f);
 						buildData(targetObject, row, f, value);
 					}
-					loaderUtils.managesResult(result, fileSheet, row, targetObject);
+					FileLoaderUtils.managesResult(result, fileSheet, row, targetObject);
 				}
 			}
 			workbook.close();
@@ -115,7 +111,7 @@ public class ExcelFileReader implements IFileReader {
 			row.put(f.getLabel(), value);
 		} else {
 			try {
-				loaderUtils.setEntityObject(targetObject, f, value);
+				FileLoaderUtils.setEntityObject(targetObject, f, value);
 			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 				throw new FileReaderException(e);
 			}

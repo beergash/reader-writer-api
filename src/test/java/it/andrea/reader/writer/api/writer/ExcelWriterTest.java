@@ -4,11 +4,13 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import it.andrea.reader.writer.api.TestConfigurator;
 import it.andrea.reader.writer.api.exception.FileWriterException;
 import it.andrea.reader.writer.api.utility.TestUtility;
+import it.andrea.reader.writer.api.utility.model.Match;
+import it.andrea.reader.writer.api.utility.model.Person;
 import it.andrea.reader.writer.api.writer.interfaces.IReportWriter;
 import it.andrea.reader.writer.api.writer.model.ReportFeature;
 
@@ -38,9 +42,16 @@ public class ExcelWriterTest extends TestConfigurator {
 
 	private List<Map<String, Object>> sheet1Data;
 	private List<Map<String, Object>> sheet2Data;
+	private List<Person> persons = new ArrayList<Person>();
+	private List<Match> matches = new ArrayList<Match>();
 
 	@Before
 	public void prepareData() {
+		buildMapData();
+		buildTypedData();
+	}
+
+	private void buildMapData() {
 		sheet1Data = new ArrayList<Map<String, Object>>();
 		Map<String, Object> row1 = new HashMap<String, Object>();
 		row1.put("Name", "Michael");
@@ -52,7 +63,6 @@ public class ExcelWriterTest extends TestConfigurator {
 		row2.put("Salary", new BigDecimal("2200"));
 		sheet1Data.add(row1);
 		sheet1Data.add(row2);
-
 		sheet2Data = new ArrayList<Map<String, Object>>();
 		row1 = new HashMap<String, Object>();
 		row1.put("Team_A", "Brazil");
@@ -63,10 +73,16 @@ public class ExcelWriterTest extends TestConfigurator {
 		row2.put("Team_A", "France");
 		row2.put("Team_B", "Argentina");
 		row2.put("Match_Date", LocalDate.of(2018, 6, 30));
-		row2.put("Score", "2-1");
+		row2.put("Score", "4-3");
 		sheet2Data.add(row1);
 		sheet2Data.add(row2);
+	}
 
+	private void buildTypedData() {
+		persons.add(new Person("Michael", new GregorianCalendar(1986, 11, 13).getTime(), new BigDecimal("1500.5")));
+		persons.add(new Person("Kevin", new GregorianCalendar(1972, 12, 4).getTime(), new BigDecimal("2200")));
+		matches.add(new Match("Brazil", "Mexico", LocalDate.of(2018, 7, 1), "2-0"));
+		matches.add(new Match("France", "Argentina", LocalDate.of(2018, 6, 30), "2-1"));
 	}
 
 	@Test
@@ -75,6 +91,16 @@ public class ExcelWriterTest extends TestConfigurator {
 		repFeature.setOutputDirectory(TEST_FOLDER + "output/");
 		repFeature.getSheets().get(0).setData(sheet1Data);
 		repFeature.getSheets().get(1).setData(sheet2Data);
+		excelWriter.writeReport(repFeature);
+	}
+
+	@Test
+	@Ignore
+	public void testWriteExcelWithTypedObject() throws IOException, FileWriterException {
+		ReportFeature repFeature = TestUtility.getReportFeaturesByPropertiesFile(reportProperties, "excel_typed");
+		repFeature.setOutputDirectory(TEST_FOLDER + "output/");
+		repFeature.getSheets().get(0).setTypedData(persons);
+		repFeature.getSheets().get(1).setTypedData(matches);
 		excelWriter.writeReport(repFeature);
 	}
 }

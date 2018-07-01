@@ -12,9 +12,6 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
 
 import it.andrea.reader.writer.api.exception.FileReaderException;
 import it.andrea.reader.writer.api.reader.impl.ExcelFileReader;
@@ -28,8 +25,6 @@ import it.andrea.reader.writer.api.reader.model.Matcher;
  * 
  * @author Andrea Aresta
  */
-@Service
-@Scope(value = BeanDefinition.SCOPE_SINGLETON)
 public class FileLoaderUtils {
 
 	private static final Logger log = LoggerFactory.getLogger(ExcelFileReader.class);
@@ -42,7 +37,7 @@ public class FileLoaderUtils {
 	 * @return
 	 * @throws FileReaderException
 	 */
-	public Object convertValue(String value, FileTrace trace) throws FileReaderException {
+	public static Object convertValue(String value, FileTrace trace) throws FileReaderException {
 		Object formattedValue = value;
 		switch (trace.getDataType()) {
 		case STRING:
@@ -67,6 +62,9 @@ public class FileLoaderUtils {
 				throw new FileReaderException(errorMsg, e);
 			}
 			break;
+		default:
+			formattedValue = value;
+			break;
 		}
 		return formattedValue;
 	}
@@ -78,7 +76,7 @@ public class FileLoaderUtils {
 	 * @param matcher
 	 * @return
 	 */
-	public boolean isRecordValid(String value, Matcher matcher) {
+	public static boolean isMatched(String value, Matcher matcher) {
 		boolean isRecordValid = false;
 		switch (matcher.getOperator()) {
 		case EQ:
@@ -106,7 +104,7 @@ public class FileLoaderUtils {
 		return isRecordValid;
 	}
 	
-	public void managesResult(Map<String, FileResult> result, FileSheet sheet, Map<String, Object> row, Object record) {
+	public static void managesResult(Map<String, FileResult> result, FileSheet sheet, Map<String, Object> row, Object record) {
 		if (record == null) {
 			managesResult(result, sheet, row);
 		} else {
@@ -114,7 +112,7 @@ public class FileLoaderUtils {
 		}
 	}
 
-	private void managesResult(Map<String, FileResult> result, FileSheet sheet, Map<String, Object> row) {
+	private static void managesResult(Map<String, FileResult> result, FileSheet sheet, Map<String, Object> row) {
 		if (result.get(sheet.getName()) != null) {
 			LinkedList<Map<String, Object>> data = (LinkedList<Map<String, Object>>) result.get(sheet.getName()).getData();
 			data.add(row);
@@ -127,7 +125,7 @@ public class FileLoaderUtils {
 		}
 	}
 
-	private void managesResult(Map<String, FileResult> result, FileSheet sheet, Object record) {
+	private static void managesResult(Map<String, FileResult> result, FileSheet sheet, Object record) {
 		if (result.get(sheet.getName()) != null) {
 			LinkedList<Object> records = (LinkedList<Object>) result.get(sheet.getName()).getMappedData();
 			records.add(record);
@@ -140,7 +138,7 @@ public class FileLoaderUtils {
 		}
 	}
 
-	public void setEntityObject(Object targetObject, FileTrace recordConfig, Object value)
+	public static void setEntityObject(Object targetObject, FileTrace recordConfig, Object value)
 			throws FileReaderException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		String fieldJavaAttribute = recordConfig.getFieldJavaAttribute();
 		String setterMethodName = "set" + fieldJavaAttribute.substring(0, 1).toUpperCase() + fieldJavaAttribute.substring(1);
@@ -156,6 +154,10 @@ public class FileLoaderUtils {
 			case NUMBER:
 				setterMethod = targetObject.getClass().getMethod(setterMethodName, BigDecimal.class);
 				break;
+			default:
+				setterMethod = targetObject.getClass().getMethod(setterMethodName, String.class);
+				break;
+				
 			}
 		} catch (NoSuchMethodException e) {
 			String errMsg = "not valid java attribute " + fieldJavaAttribute;

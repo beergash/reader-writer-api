@@ -1,5 +1,6 @@
 package it.andrea.reader.writer.api.utility.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Person {
@@ -9,6 +10,18 @@ public class Person {
 	private Date birthDate;
 	private String gender;
 	private String residenceCity;
+	private BigDecimal salary;
+
+	public Person() {
+		super();
+	}
+
+	public Person(String name, Date birthDate, BigDecimal salary) {
+		super();
+		this.name = name;
+		this.birthDate = birthDate;
+		this.salary = salary;
+	}
 
 	public String getName() {
 		return name;
@@ -48,6 +61,14 @@ public class Person {
 
 	public void setResidenceCity(String residenceCity) {
 		this.residenceCity = residenceCity;
+	}
+
+	public BigDecimal getSalary() {
+		return salary;
+	}
+
+	public void setSalary(BigDecimal salary) {
+		this.salary = salary;
 	}
 
 }

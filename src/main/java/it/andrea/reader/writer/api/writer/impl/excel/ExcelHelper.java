@@ -15,32 +15,24 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
 
+import it.andrea.reader.writer.api.exception.FileWriterException;
 import it.andrea.reader.writer.api.writer.ReportUtils;
 import it.andrea.reader.writer.api.writer.model.ReportTrace;
 
 /**
  * @author Andrea Aresta
  */
-@Service
-@Scope(value = BeanDefinition.SCOPE_SINGLETON)
 public class ExcelHelper {
 
-	@Autowired
-	private ReportUtils repUtils;
-
-	public void definesCellTypeByValue(CellStyle decimalStyle, CellStyle integerStyle, Cell cell, Object value, ReportTrace trace) {
+	public static void definesCellTypeByValue(CellStyle decimalStyle, CellStyle integerStyle, Cell cell, Object value, ReportTrace trace) throws FileWriterException {
 		switch (trace.getDataType()) {
 		case STRING:
 			cell.setCellValue(value.toString());
 			cell.setCellType(CellType.STRING);
 			break;
 		case DATE:
-			String formattedValue = repUtils.formatDateField(value, trace);
+			String formattedValue = ReportUtils.formatDateField(value, trace);
 			cell.setCellValue(formattedValue);
 			cell.setCellType(CellType.STRING);
 			break;
@@ -61,7 +53,7 @@ public class ExcelHelper {
 		}
 	}
 
-	public void buildRowHeader(Workbook workbook, Sheet sheet, List<ReportTrace> trace) {
+	public static void buildRowHeader(Workbook workbook, Sheet sheet, List<ReportTrace> trace) {
 		CellStyle style = workbook.createCellStyle();
 		Font font = workbook.createFont();
 		font.setBold(true);

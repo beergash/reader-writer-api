@@ -45,6 +45,6 @@ public abstract class BaseReportTextCreator implements IReportWriter {
 		return new File(fullFilename);
 	}
 
-	protected abstract LinkedList<String> createLines(ReportSheet sheet, IReportPreaparer preparer);
+	protected abstract LinkedList<String> createLines(ReportSheet sheet, IReportPreaparer preparer) throws FileWriterException;
 
 }

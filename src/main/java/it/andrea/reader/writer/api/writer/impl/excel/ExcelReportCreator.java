@@ -19,11 +19,11 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import it.andrea.reader.writer.api.exception.FileWriterException;
+import it.andrea.reader.writer.api.writer.ReportUtils;
 import it.andrea.reader.writer.api.writer.interfaces.IReportPreaparer;
 import it.andrea.reader.writer.api.writer.interfaces.IReportWriter;
 import it.andrea.reader.writer.api.writer.model.DefaultReportPreparer;
@@ -36,12 +36,9 @@ import it.andrea.reader.writer.api.writer.model.ReportTrace;
  */
 @Service
 @Qualifier("excel")
-public class ExcelReportWriter implements IReportWriter {
-	
-	@Autowired
-	private ExcelHelper excelHelper;
+public class ExcelReportCreator implements IReportWriter {
 
-	private static final Logger log = LoggerFactory.getLogger(ExcelReportWriter.class);
+	private static final Logger log = LoggerFactory.getLogger(ExcelReportCreator.class);
 
 	public File writeReport(ReportFeature repFeature) throws IOException, FileWriterException {
 		IReportPreaparer preparer = Optional.ofNullable(repFeature.getPreparer()).orElse(new DefaultReportPreparer());
@@ -53,9 +50,9 @@ public class ExcelReportWriter implements IReportWriter {
 		parentDir.mkdirs();
 		Workbook workbook = new HSSFWorkbook();
 		FileOutputStream outputStream = null;
-		sheets.forEach(s -> {
+		for (ReportSheet s : sheets) {
 			buildSheet(s, workbook);
-		});
+		}
 		try {
 			outputStream = new FileOutputStream(fullFilename);
 			workbook.write(outputStream);
@@ -71,29 +68,41 @@ public class ExcelReportWriter implements IReportWriter {
 		return file;
 	}
 
-	private void buildSheet(ReportSheet excelSheet, Workbook wb) {
-		List<ReportTrace> trace = excelSheet.getTrace().stream().sorted(Comparator.comparing(ReportTrace::getPosition))
-				.collect(Collectors.toList());
+	private void buildSheet(ReportSheet excelSheet, Workbook wb) throws FileWriterException {
+		List<ReportTrace> trace = excelSheet.getTrace().stream().sorted(Comparator.comparing(ReportTrace::getPosition)).collect(Collectors.toList());
 		Sheet sheet = wb.createSheet(excelSheet.getName());
 		CreationHelper createHelper = wb.getCreationHelper();
 		CellStyle decimalStyle = wb.createCellStyle();
 		decimalStyle.setDataFormat(createHelper.createDataFormat().getFormat("#,##0.00####;-#,##0.00####;0.00"));
 		CellStyle integerStyle = wb.createCellStyle();
 		integerStyle.setDataFormat(createHelper.createDataFormat().getFormat("#,##0;-#,##0;0"));
+		ExcelHelper.buildRowHeader(wb, sheet, trace);
 		List<Map<String, Object>> data = excelSheet.getData();
-		excelHelper.buildRowHeader(wb, sheet, trace);
 		AtomicInteger rowNum = new AtomicInteger(1);
-		data.forEach(d -> {
-			Row row = sheet.createRow(rowNum.getAndIncrement());
-			AtomicInteger colNum = new AtomicInteger(0);
-			trace.stream().forEach(t -> {
-				Object field = d.get(t.getFieldName());
-				Cell cell = row.createCell(colNum.getAndIncrement());
-				excelHelper.definesCellTypeByValue(decimalStyle, integerStyle, cell, field, t);
-			});
-		});
+		if (data != null) {
+			for (Map<String, Object> rec : data) {
+				processRow(excelSheet, sheet, decimalStyle, integerStyle, rowNum, rec, null);
+			}
+		} else {
+			for (Object typedRec : excelSheet.getTypedData()) {
+				processRow(excelSheet, sheet, decimalStyle, integerStyle, rowNum, null, typedRec);
+			}
+		}
 		for (int i = 0; i < sheet.getRow(0).getLastCellNum(); i++) {
 			sheet.autoSizeColumn(i);
+		}
+	}
+
+	private void processRow(ReportSheet excelSheet, Sheet sheet, CellStyle decimalStyle, CellStyle integerStyle, AtomicInteger rowNum, Map<String, Object> rec, Object typedRec)
+			throws FileWriterException {
+		List<ReportTrace> trace = excelSheet.getTrace().stream().sorted(Comparator.comparing(ReportTrace::getPosition)).collect(Collectors.toList());
+		Row row = sheet.createRow(rowNum.getAndIncrement());
+		AtomicInteger colNum = new AtomicInteger(0);
+		for (ReportTrace t : trace) {
+			Object field = ReportUtils.findsValueByListType(excelSheet, rec, typedRec, t);
+			Cell cell = row.createCell(colNum.getAndIncrement());
+			ExcelHelper.definesCellTypeByValue(decimalStyle, integerStyle, cell, field, t);
+
 		}
 	}
 

@@ -15,7 +15,6 @@ import java.util.TreeMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import it.andrea.reader.writer.api.exception.FileReaderException;
 import it.andrea.reader.writer.api.model.DataType;
@@ -31,9 +30,6 @@ import it.andrea.reader.writer.api.reader.model.FileTrace;
  *
  */
 public abstract class TextFileReader implements IFileReader {
-
-	@Autowired
-	private FileLoaderUtils loaderUtils;
 
 	private static final Logger log = LoggerFactory.getLogger(TextFileReader.class);
 	
@@ -84,7 +80,7 @@ public abstract class TextFileReader implements IFileReader {
 			row.put(f.getLabel(), value);
 		} else {
 			try {
-				loaderUtils.setEntityObject(targetObject, f, value);
+				FileLoaderUtils.setEntityObject(targetObject, f, value);
 			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 				throw new FileReaderException(e);
 			}

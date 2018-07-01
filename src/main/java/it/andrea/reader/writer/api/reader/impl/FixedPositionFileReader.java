@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -27,9 +26,6 @@ public class FixedPositionFileReader extends TextFileReader {
 
 	private static final String INTERVAL_POSITION_CHAR_SEPARATOR = "-";
 
-	@Autowired
-	private FileLoaderUtils loaderUtils;
-
 	protected void readLine(FileFeature fileFeature, String line, Map<String, FileResult> result, String header) throws FileReaderException {
 		for (FileSheet s : fileFeature.getSheets()) {
 			List<FileTrace> fields = (s.getFields() == null || s.getFields().size() == 0) ? getDeafultTrace(header, s.getSeparator()) : s.getFields();
@@ -45,17 +41,17 @@ public class FixedPositionFileReader extends TextFileReader {
 					String[] rangePosition = f.getPosition().split(INTERVAL_POSITION_CHAR_SEPARATOR);
 					int startPosition = Integer.valueOf(rangePosition[0]) - 1;
 					int endPosition = Integer.valueOf(rangePosition[1]);
-					Object value = loaderUtils.convertValue(line.substring(startPosition, endPosition).trim(), f);
+					Object value = FileLoaderUtils.convertValue(line.substring(startPosition, endPosition).trim(), f);
 					buildData(targetObject, row, f, value);
 				}
-				loaderUtils.managesResult(result, s, row, targetObject);
+				FileLoaderUtils.managesResult(result, s, row, targetObject);
 			}
 		}
 	}
 
 	private boolean isRecordValidForSheet(String line, List<Matcher> validationConditions) {
 		return validationConditions.stream()
-				.allMatch(c -> loaderUtils.isRecordValid(
+				.allMatch(c -> FileLoaderUtils.isMatched(
 						line.substring(Integer.valueOf(c.getPosition().split(INTERVAL_POSITION_CHAR_SEPARATOR)[0]) - 1, Integer.valueOf(c.getPosition().split(INTERVAL_POSITION_CHAR_SEPARATOR)[1])),
 						c));
 	}

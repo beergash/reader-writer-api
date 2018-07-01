@@ -4,13 +4,14 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.StringJoiner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import it.andrea.reader.writer.api.exception.FileWriterException;
 import it.andrea.reader.writer.api.writer.BaseReportTextCreator;
 import it.andrea.reader.writer.api.writer.ReportUtils;
 import it.andrea.reader.writer.api.writer.interfaces.IReportPreaparer;
@@ -21,14 +22,11 @@ import it.andrea.reader.writer.api.writer.model.ReportTrace;
 @Qualifier("csv")
 public class CsvReportCreator extends BaseReportTextCreator {
 
-	@Autowired
-	private ReportUtils repUtils;
-
 	private static final Logger log = LoggerFactory.getLogger(CsvReportCreator.class);
 
 	@Override
-	protected LinkedList<String> createLines(ReportSheet sheet, IReportPreaparer preparer) {
-		log.info("Creates lines of fixed position report");
+	protected LinkedList<String> createLines(ReportSheet sheet, IReportPreaparer preparer) throws FileWriterException {
+		log.info("Creates lines of csv report");
 		LinkedList<String> lines = new LinkedList<String>();
 		List<Map<String, Object>> reportData = sheet.getData();
 		List<ReportTrace> trace = sheet.getTrace();
@@ -36,22 +34,31 @@ public class CsvReportCreator extends BaseReportTextCreator {
 		if (sheet.getHeader() != null && !"".equalsIgnoreCase(sheet.getHeader())) {
 			lines.add(preparer.buildSheetHeader(sheet));
 		}
-		for (Map<String, Object> record : reportData) {
-			StringBuffer line = new StringBuffer();
-			String separator = sheet.getSeparator();
-			for (ReportTrace arc : trace) {
-				Object value = record.get(arc.getFieldName()) == null ? "" : record.get(arc.getFieldName());
-				String formattedValue = repUtils.formatValue(value, arc);
-				line.append(formattedValue);
-				line.append(separator);
+		if (reportData != null) {
+			for (Map<String, Object> record : reportData) {
+				buildRow(sheet, lines, trace, record, null);
 			}
-			line.deleteCharAt(line.lastIndexOf(separator));
-			lines.add(line.toString());
+		} else {
+			for (Object record : sheet.getTypedData()) {
+				buildRow(sheet, lines, trace, null, record);
+			}
 		}
 		if (sheet.getFooter() != null && !"".equalsIgnoreCase(sheet.getFooter())) {
 			lines.add(preparer.buildSheetFooter(sheet));
 		}
 		return lines;
+	}
+
+	private void buildRow(ReportSheet sheet, LinkedList<String> lines, List<ReportTrace> trace, Map<String, Object> record, Object typedRecord) throws FileWriterException {
+		String separator = sheet.getSeparator();
+		StringJoiner joiner = new StringJoiner(separator);
+		for (ReportTrace cfg : trace) {
+			Object value = ReportUtils.findsValueByListType(sheet, record, typedRecord, cfg);
+			String formattedValue = ReportUtils.formatValue(value, cfg);
+			joiner.add(formattedValue);
+		}
+		String line = joiner.toString();
+		lines.add(line.toString());
 	}
 
 }
