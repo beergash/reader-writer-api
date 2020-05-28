@@ -6,12 +6,6 @@
 	<artifactId>reader-writer-api</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 
-	<parent>
-		<groupId>it.beergash.parent</groupId>
-		<artifactId>it.beergash.parent</artifactId>
-		<version>1.0.0</version>
-	</parent>
-
 	<name>reader-writer-api</name>
 	<description>File Reader and writer API</description>
 	<url>http://maven.apache.org</url>
@@ -24,6 +18,9 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<junit.version>4.12</junit.version>
+		<mockito.version>2.19.0</mockito.version>
+
 	</properties>
 
 	<dependencyManagement>
