@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -95,6 +96,7 @@ public class CsvFileReaderTest extends TestConfigurator {
 	}
 
 	@Test
+	@Ignore
 	public void testLoadFile2SheetsWithRewriter() throws IOException, FileReaderException {
 		String methodName = "testLoadFile2SheetsWithRewriter";
 		log.info("Begin test: " + methodName);

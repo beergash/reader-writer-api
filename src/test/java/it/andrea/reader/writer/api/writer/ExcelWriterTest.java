@@ -1,16 +1,13 @@
 package it.andrea.reader.writer.api.writer;
 
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import it.andrea.reader.writer.api.TestConfigurator;
+import it.andrea.reader.writer.api.exception.FileWriterException;
+import it.andrea.reader.writer.api.utility.TestUtility;
+import it.andrea.reader.writer.api.utility.model.Match;
+import it.andrea.reader.writer.api.utility.model.Person;
+import it.andrea.reader.writer.api.writer.interfaces.IReportWriter;
+import it.andrea.reader.writer.api.writer.model.ReportFeature;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +17,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import it.andrea.reader.writer.api.TestConfigurator;
-import it.andrea.reader.writer.api.exception.FileWriterException;
-import it.andrea.reader.writer.api.utility.TestUtility;
-import it.andrea.reader.writer.api.utility.model.Match;
-import it.andrea.reader.writer.api.utility.model.Person;
-import it.andrea.reader.writer.api.writer.interfaces.IReportWriter;
-import it.andrea.reader.writer.api.writer.model.ReportFeature;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -91,16 +85,6 @@ public class ExcelWriterTest extends TestConfigurator {
 		repFeature.setOutputDirectory(TEST_FOLDER + "output/");
 		repFeature.getSheets().get(0).setData(sheet1Data);
 		repFeature.getSheets().get(1).setData(sheet2Data);
-		excelWriter.writeReport(repFeature);
-	}
-
-	@Test
-	@Ignore
-	public void testWriteExcelWithTypedObject() throws IOException, FileWriterException {
-		ReportFeature repFeature = TestUtility.getReportFeaturesByPropertiesFile(reportProperties, "excel_typed");
-		repFeature.setOutputDirectory(TEST_FOLDER + "output/");
-		repFeature.getSheets().get(0).setTypedData(persons);
-		repFeature.getSheets().get(1).setTypedData(matches);
 		excelWriter.writeReport(repFeature);
 	}
 }
