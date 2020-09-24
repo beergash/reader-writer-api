@@ -62,7 +62,7 @@ public class FixedPositionFileReaderTest extends TestConfigurator {
 	public void testSimpleFixedPosFileMappedToObj() throws IOException, FileReaderException {
 		String methodName = "testSimpleFixedPosFileMappedToObj";
 		log.info("Begin test: " + methodName);
-		List<Object> data = null;
+		List<? extends Object> data = null;
 		final String sourceFile = TestUtility.INPUT_TEST_FILES_FOLDER + "simple_fixed_pos.txt";
 		FileFeature fileFeature = TestUtility.getFileFeaturesByPropertiesFile(loadingProperties, "simple_fixed_pos_map_obj");
 		try (InputStream is = this.getClass().getResourceAsStream(sourceFile)) {

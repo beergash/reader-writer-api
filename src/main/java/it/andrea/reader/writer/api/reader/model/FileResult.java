@@ -11,7 +11,7 @@ import java.util.Map;
 public class FileResult {
 
 	private List<Map<String, Object>> data;
-	private List<Object> mappedData;
+	private List<? extends Object> mappedData;
 
 	/**
 	 * @return list of records read by file. Key of map is the name of label indicating the column and the object the value
@@ -28,11 +28,11 @@ public class FileResult {
      * list of object representing the records
      * @return
      */
-	public List<Object> getMappedData() {
+	public List<? extends Object> getMappedData() {
 		return mappedData;
 	}
 
-	public void setMappedData(List<Object> mappedData) {
+	public void setMappedData(List<? extends Object> mappedData) {
 		this.mappedData = mappedData;
 	}
 

@@ -43,7 +43,7 @@ public class ExcelHelper {
 			break;
 		case INTEGER:
 			cell.setCellType(CellType.NUMERIC);
-			cell.setCellValue(new Integer(value.toString()));
+			cell.setCellValue(Integer.valueOf(value.toString()));
 			cell.setCellStyle(integerStyle);
 			break;
 		default:

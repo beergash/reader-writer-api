@@ -22,6 +22,9 @@ public class FileSheet {
 	private boolean hasFooter;
 	private Class<?> targetClass;
 
+	public FileSheet() {
+	}
+
 	public FileSheet(String name) {
 		super();
 		this.name = name;

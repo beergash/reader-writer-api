@@ -76,7 +76,7 @@ public class ExcelFileReaderTest extends TestConfigurator {
 		String methodName = "testReadFileExcel";
 		log.info("Begin test: " + methodName);
 		List<Map<String, Object>> matches = new LinkedList<Map<String, Object>>();
-		List<Object> persons = new ArrayList<Object>();
+		List<? extends Object> persons = new ArrayList<Object>();
 		final String sourceFile = TestUtility.INPUT_TEST_FILES_FOLDER + "test_excel.xlsx";
 		FileFeature fileFeature = TestUtility.getFileFeaturesByPropertiesFile(loadingProperties, "test_excel_map_obj");
 		try (InputStream is = this.getClass().getResourceAsStream(sourceFile)) {

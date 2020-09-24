@@ -5,7 +5,7 @@ import it.andrea.reader.writer.api.model.DataType;
 public class FileTrace {
 
 	private String position;
-	private DataType dataType;
+	private DataType dataType = DataType.STRING;
 	private String dateFormat;
 	private String numberFormat;
 	private String label;

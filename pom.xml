@@ -4,7 +4,7 @@
 
 	<groupId>it.andrea</groupId>
 	<artifactId>reader-writer-api</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 
 	<name>reader-writer-api</name>
 	<description>File Reader and writer API</description>

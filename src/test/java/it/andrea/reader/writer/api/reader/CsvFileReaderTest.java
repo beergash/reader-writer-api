@@ -78,7 +78,7 @@ public class CsvFileReaderTest extends TestConfigurator {
 	public void testFileMappedToObject() throws IOException, FileReaderException {
 		String methodName = "testFileMappedToObject";
 		log.info("Begin test: " + methodName);
-		List<Object> result = null;
+		List<? extends Object> result = null;
 		final String sourceFile = TestUtility.INPUT_TEST_FILES_FOLDER + "test_map_objects.csv";
 		FileFeature fileFeature = TestUtility.getFileFeaturesByPropertiesFile(loadingProperties, "test_map_obj");
 		try (InputStream is = this.getClass().getResourceAsStream(sourceFile)) {
