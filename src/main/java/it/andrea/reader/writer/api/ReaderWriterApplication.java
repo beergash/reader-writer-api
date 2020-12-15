@@ -15,9 +15,5 @@ public class ReaderWriterApplication {
 
 	public static void main(String[] args) throws Exception {
 		ApplicationContext ctx = SpringApplication.run(ReaderWriterApplication.class, args);
-		log.info("BEANS");
-		Arrays.asList(ctx.getBeanDefinitionNames()).forEach(b -> {
-			log.info(b);
-		});
 	}
 }

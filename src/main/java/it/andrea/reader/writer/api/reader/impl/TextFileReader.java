@@ -48,7 +48,7 @@ public abstract class TextFileReader implements IFileReader {
 	}
 	
 	protected Map<String, FileResult> readBufferedReader(FileFeature fileFeature, BufferedReader reader) throws IOException, FileReaderException {
-		log.info("reading file csv");
+		log.debug("reading file csv");
 		Map<String, FileResult> result = new TreeMap<String, FileResult>();
 		String header = "";
 		if (fileFeature.isHasHeader()) {

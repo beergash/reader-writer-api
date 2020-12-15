@@ -16,6 +16,16 @@ public class ReportTrace {
 	private DateFormat outputDateFormat;
 	private String numberFormat;
 
+
+	public ReportTrace() {
+	}
+
+
+	public ReportTrace(Integer position, String fieldName) {
+		this.position = position;
+		this.fieldName = fieldName;
+	}
+
 	/**
 	 * @return column index of the field. For fixed position it's the start position
 	 */

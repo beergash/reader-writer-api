@@ -26,7 +26,7 @@ public class CsvReportCreator extends BaseReportTextCreator {
 
 	@Override
 	protected LinkedList<String> createLines(ReportSheet sheet, IReportPreaparer preparer) throws FileWriterException {
-		log.info("Creates lines of csv report");
+		log.debug("Creates lines of csv report");
 		LinkedList<String> lines = new LinkedList<String>();
 		List<Map<String, Object>> reportData = sheet.getData();
 		List<ReportTrace> trace = sheet.getTrace();
@@ -58,7 +58,7 @@ public class CsvReportCreator extends BaseReportTextCreator {
 			joiner.add(formattedValue);
 		}
 		String line = joiner.toString();
-		lines.add(line.toString());
+		lines.add(line);
 	}
 
 }

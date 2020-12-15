@@ -64,7 +64,7 @@ public class ExcelReportCreator implements IReportWriter {
 			}
 			workbook.close();
 		}
-		log.info("created file: " + fullFilename);
+		log.debug("created file: " + fullFilename);
 		return file;
 	}
 

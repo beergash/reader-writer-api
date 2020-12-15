@@ -38,7 +38,7 @@ public class CsvRewriterExample implements IFileRewriter {
 		} catch (IOException e) {
 			log.error(e.getMessage(), e);
 		}
-		log.info("rewritten file: " + file.getName());
+		log.debug("rewritten file: " + file.getName());
 		return file;
 	}
 

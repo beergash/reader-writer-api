@@ -28,7 +28,7 @@ public class FixedPositionReportCreator extends BaseReportTextCreator {
 
 	@Override
 	protected LinkedList<String> createLines(ReportSheet sheet, IReportPreaparer preparer) throws FileWriterException {
-		log.info("Creates lines of fixed position report");
+		log.debug("Creates lines of fixed position report");
 		LinkedList<String> lines = new LinkedList<String>();
 		List<Map<String, Object>> reportData = sheet.getData();
 		if (sheet.getHeader() != null && !"".equalsIgnoreCase(sheet.getHeader())) {

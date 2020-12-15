@@ -44,7 +44,7 @@ public class ExcelFileReader implements IFileReader {
 
 	@Override
 	public Map<String, FileResult> readFile(File file, FileFeature fileFeature) throws IOException, FileReaderException {
-		log.info("reading excel file : " + file.getName());
+		log.debug("reading excel file : " + file.getName());
 		try (InputStream is = new FileInputStream(file)) {
 			return readFile(is, fileFeature);
 		}
@@ -54,7 +54,7 @@ public class ExcelFileReader implements IFileReader {
 
 	@Override
 	public Map<String, FileResult> readFile(InputStream is, FileFeature fileFeature) throws IOException, FileReaderException {
-		log.info("Reading excel file");
+		log.debug("Reading excel file");
 		Map<String, FileResult> result = new LinkedHashMap<String, FileResult>();
 		Object targetObject = null;
 		try {

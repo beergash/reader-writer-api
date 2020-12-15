@@ -23,7 +23,7 @@ public abstract class BaseReportTextCreator implements IReportWriter {
 	private static final Logger log = LoggerFactory.getLogger(BaseReportTextCreator.class);
 
 	public File writeReport(ReportFeature repFeature) throws IOException, FileWriterException {
-		log.info("Creating report: " + repFeature.getFilename());
+		log.debug("Creating report: " + repFeature.getFilename());
 		IReportPreaparer preparer = Optional.ofNullable(repFeature.getPreparer()).orElse(new DefaultReportPreparer());
 		String filename = preparer.generateFileName(repFeature);
 		String fullFilename = repFeature.getOutputDirectory() + File.separator + filename;
@@ -41,7 +41,7 @@ public abstract class BaseReportTextCreator implements IReportWriter {
 		}
 		writer.flush();
 		writer.close();
-		log.info("created file: " + fullFilename);
+		log.debug("created file: " + fullFilename);
 		return new File(fullFilename);
 	}
 

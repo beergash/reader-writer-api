@@ -38,6 +38,7 @@ public class FileLoaderUtils {
 	 * @throws FileReaderException
 	 */
 	public static Object convertValue(String value, FileTrace trace) throws FileReaderException {
+		value = trace.getInterpreter() == null ? value : trace.getInterpreter().interpretValue(value);
 		Object formattedValue = value;
 		switch (trace.getDataType()) {
 		case STRING:

@@ -1,6 +1,7 @@
 package it.andrea.reader.writer.api.reader.model;
 
 import it.andrea.reader.writer.api.model.DataType;
+import it.andrea.reader.writer.api.writer.interfaces.ICellValueInterpreter;
 
 public class FileTrace {
 
@@ -10,6 +11,7 @@ public class FileTrace {
 	private String numberFormat;
 	private String label;
 	private String fieldJavaAttribute;
+	private ICellValueInterpreter interpreter;
 
 	public FileTrace() {
 	}
@@ -90,4 +92,11 @@ public class FileTrace {
 		this.fieldJavaAttribute = fieldJavaAttribute;
 	}
 
+	public ICellValueInterpreter getInterpreter() {
+		return interpreter;
+	}
+
+	public void setInterpreter(ICellValueInterpreter interpreter) {
+		this.interpreter = interpreter;
+	}
 }

@@ -10,6 +10,7 @@ public class ReportFeature {
 	private String outputDirectory;
 	private List<ReportSheet> sheets;
 	private IReportPreaparer preparer;
+	private boolean appendFile = false;
 
 	public String getFilename() {
 		return filename;
@@ -43,4 +44,10 @@ public class ReportFeature {
 		this.preparer = preparer;
 	}
 
+	public boolean isAppendFile() {
+		return appendFile;
+	}
+	public void setAppendFile(boolean appendFile) {
+		this.appendFile = appendFile;
+	}
 }
