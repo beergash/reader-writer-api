@@ -5,7 +5,7 @@ package it.andrea.reader.writer.api.exception;
  * @author Andrea Aresta
  *
  */
-public class FileWriterException extends Exception {
+public class FileWriterException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 

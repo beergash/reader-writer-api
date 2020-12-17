@@ -27,12 +27,20 @@ public abstract class BaseReportTextCreator implements IReportWriter {
 		IReportPreaparer preparer = Optional.ofNullable(repFeature.getPreparer()).orElse(new DefaultReportPreparer());
 		String filename = preparer.generateFileName(repFeature);
 		String fullFilename = repFeature.getOutputDirectory() + File.separator + filename;
+		File file = new File(fullFilename);
+		if (!file.exists()) {
+			file.getParentFile().mkdirs();
+		}
 		List<ReportSheet> sheet = repFeature.getSheets();
 		List<String> sheetFileData = new LinkedList<String>();
 		for (ReportSheet reportTextSheet : sheet) {
 			sheetFileData.addAll(createLines(reportTextSheet, preparer));
 		}
-		BufferedWriter writer = new BufferedWriter(new FileWriter(fullFilename));
+		BufferedWriter writer = new BufferedWriter(new FileWriter(fullFilename, repFeature.isAppendMode()));
+		/// Se sono in modo append e il file è gia pieno, vado a capo
+		if (file.length() != 0 && repFeature.isAppendMode()) {
+			writer.newLine();
+		}
 		for (int i=0; i<sheetFileData.size(); i++) {
 			writer.write(sheetFileData.get(i));
 			if (i != sheetFileData.size() -1) {

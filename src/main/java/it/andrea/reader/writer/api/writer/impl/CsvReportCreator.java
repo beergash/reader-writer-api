@@ -5,7 +5,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,7 +33,7 @@ public class CsvReportCreator extends BaseReportTextCreator {
 		List<Map<String, Object>> reportData = sheet.getData();
 		List<ReportTrace> trace = sheet.getTrace();
 		trace.sort(Comparator.comparing(ReportTrace::getPosition));
-		if (sheet.getHeader() != null && !"".equalsIgnoreCase(sheet.getHeader())) {
+		if (!StringUtils.isEmpty(sheet.getHeader())) {
 			lines.add(preparer.buildSheetHeader(sheet));
 		}
 		if (reportData != null) {
@@ -43,22 +45,22 @@ public class CsvReportCreator extends BaseReportTextCreator {
 				buildRow(sheet, lines, trace, null, record);
 			}
 		}
-		if (sheet.getFooter() != null && !"".equalsIgnoreCase(sheet.getFooter())) {
+		if (!StringUtils.isEmpty(sheet.getFooter())) {
 			lines.add(preparer.buildSheetFooter(sheet));
 		}
 		return lines;
 	}
 
-	private void buildRow(ReportSheet sheet, LinkedList<String> lines, List<ReportTrace> trace, Map<String, Object> record, Object typedRecord) throws FileWriterException {
-		String separator = sheet.getSeparator();
-		StringJoiner joiner = new StringJoiner(separator);
-		for (ReportTrace cfg : trace) {
-			Object value = ReportUtils.findsValueByListType(sheet, record, typedRecord, cfg);
-			String formattedValue = ReportUtils.formatValue(value, cfg);
-			joiner.add(formattedValue);
+	private void buildRow(ReportSheet sheet, LinkedList<String> lines, List<ReportTrace> trace, Map<String, Object> record, Object typedRecord) {
+		String line = trace.stream()
+				.map(cfg -> {
+					Object value = ReportUtils.findsValueByListType(sheet, record, typedRecord, cfg);
+					return ReportUtils.formatValue(value, cfg);
+				})
+				.filter(row -> !StringUtils.isEmpty(row)).collect(Collectors.joining(sheet.getSeparator()));
+		if (!StringUtils.isEmpty(line)) {
+			lines.add(line);
 		}
-		String line = joiner.toString();
-		lines.add(line);
 	}
 
 }

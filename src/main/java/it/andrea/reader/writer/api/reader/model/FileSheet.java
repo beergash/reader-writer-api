@@ -75,15 +75,6 @@ public class FileSheet {
 		this.validationConditions = validationConditions;
 	}
 
-	public Map<String, FileTrace> getTraceMap() {
-		Objects.requireNonNull(fields);
-		Map<String, FileTrace> trace = new HashMap<String, FileTrace>();
-		fields.forEach(f -> {
-			trace.put(f.getPosition(), f);
-		});
-		return trace;
-	}
-
 	/**
 	 * 
 	 * @return header of the single sheet (for example excel sheets). If it's true, first sheet line is skipped

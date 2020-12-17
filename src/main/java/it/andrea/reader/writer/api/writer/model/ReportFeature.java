@@ -10,7 +10,7 @@ public class ReportFeature {
 	private String outputDirectory;
 	private List<ReportSheet> sheets;
 	private IReportPreaparer preparer;
-	private boolean appendFile = false;
+	private boolean appendMode = false;
 
 	public String getFilename() {
 		return filename;
@@ -44,10 +44,10 @@ public class ReportFeature {
 		this.preparer = preparer;
 	}
 
-	public boolean isAppendFile() {
-		return appendFile;
+	public boolean isAppendMode() {
+		return appendMode;
 	}
-	public void setAppendFile(boolean appendFile) {
-		this.appendFile = appendFile;
+	public void setAppendMode(boolean appendMode) {
+		this.appendMode = appendMode;
 	}
 }
