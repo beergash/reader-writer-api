@@ -14,13 +14,16 @@ import it.andrea.reader.writer.api.reader.interfaces.IFileRewriter;
 public class FileFeature {
 
 	private String description;
-	private FileType type;
+	private String type;
 	private boolean hasHeader;
 	private boolean hasFooter;
 	private List<FileSheet> sheets;
 	private IFileRewriter rewriterClass;
 
-	public FileFeature(boolean hasHeader, FileType type) {
+	public FileFeature() {
+	}
+
+	public FileFeature(boolean hasHeader, String type) {
 		super();
 		this.hasHeader = hasHeader;
 		this.type = type;
@@ -35,15 +38,14 @@ public class FileFeature {
 	}
 
 	/**
-	 * type of source {@link FileType}
-	 * 
+	 * file type
 	 * @return
 	 */
-	public FileType getType() {
+	public String getType() {
 		return type;
 	}
 
-	public void setType(FileType type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 

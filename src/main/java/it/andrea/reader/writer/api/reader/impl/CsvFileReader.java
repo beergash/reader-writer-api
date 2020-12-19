@@ -4,16 +4,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import it.andrea.reader.writer.api.model.FileTypes;
+import it.andrea.reader.writer.api.reader.model.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import it.andrea.reader.writer.api.exception.FileReaderException;
 import it.andrea.reader.writer.api.utils.FileLoaderUtils;
-import it.andrea.reader.writer.api.reader.model.FileFeature;
-import it.andrea.reader.writer.api.reader.model.FileResult;
-import it.andrea.reader.writer.api.reader.model.FileSheet;
-import it.andrea.reader.writer.api.reader.model.FileTrace;
-import it.andrea.reader.writer.api.reader.model.Matcher;
 
 /**
  * Reads Csv files and gets result into {@link FileResult}
@@ -21,7 +18,7 @@ import it.andrea.reader.writer.api.reader.model.Matcher;
  * @author Andrea Aresta
  */
 @Service
-@Qualifier("csv")
+@Qualifier(FileTypes.CSV)
 public class CsvFileReader extends TextFileReader {
 
 	protected void readLine(FileFeature fileFeature, String line, Map<String, FileResult> result, String header) throws FileReaderException {

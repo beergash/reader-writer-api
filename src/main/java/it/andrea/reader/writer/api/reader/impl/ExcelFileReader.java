@@ -12,6 +12,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import it.andrea.reader.writer.api.model.FileTypes;
+import it.andrea.reader.writer.api.reader.model.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
@@ -28,10 +30,6 @@ import it.andrea.reader.writer.api.exception.FileReaderException;
 import it.andrea.reader.writer.api.model.DataType;
 import it.andrea.reader.writer.api.utils.FileLoaderUtils;
 import it.andrea.reader.writer.api.reader.interfaces.IFileReader;
-import it.andrea.reader.writer.api.reader.model.FileFeature;
-import it.andrea.reader.writer.api.reader.model.FileResult;
-import it.andrea.reader.writer.api.reader.model.FileSheet;
-import it.andrea.reader.writer.api.reader.model.FileTrace;
 
 /**
  * Reads Excel files and gets result into {@link FileResult}
@@ -39,7 +37,7 @@ import it.andrea.reader.writer.api.reader.model.FileTrace;
  * @author Andrea Aresta
  */
 @Service
-@Qualifier("excel")
+@Qualifier(FileTypes.EXCEL)
 public class ExcelFileReader implements IFileReader {
 
 	@Override

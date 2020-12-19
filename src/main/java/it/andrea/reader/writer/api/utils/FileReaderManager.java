@@ -1,20 +1,19 @@
 package it.andrea.reader.writer.api.utils;
 
+import it.andrea.reader.writer.api.exception.FileReaderException;
+import it.andrea.reader.writer.api.reader.interfaces.IFileReader;
+import it.andrea.reader.writer.api.reader.model.FileFeature;
+import it.andrea.reader.writer.api.reader.model.FileResult;
+import it.andrea.reader.writer.api.model.FileTypes;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-
-import it.andrea.reader.writer.api.exception.FileReaderException;
-import it.andrea.reader.writer.api.reader.interfaces.IFileReader;
-import it.andrea.reader.writer.api.reader.model.FileFeature;
-import it.andrea.reader.writer.api.reader.model.FileResult;
-import it.andrea.reader.writer.api.reader.model.FileType;
 
 /**
  * Manager class of reader API. Given a file source such as InputStream or File
@@ -28,15 +27,15 @@ import it.andrea.reader.writer.api.reader.model.FileType;
 public class FileReaderManager {
 
 	@Autowired
-	@Qualifier("csv")
+	@Qualifier(FileTypes.CSV)
 	private IFileReader csvReader;
 
 	@Autowired
-	@Qualifier("fixed_position")
+	@Qualifier(FileTypes.FIXED_POSITION)
 	private IFileReader fixedPositionReader;
 
 	@Autowired
-	@Qualifier("fixed_position")
+	@Qualifier(FileTypes.EXCEL)
 	private IFileReader excelReader;
 
 	/**
@@ -85,16 +84,16 @@ public class FileReaderManager {
 		return result;
 	}
 
-	private IFileReader getFileReader(FileType fileType) {
+	private IFileReader getFileReader(String fileType) {
 		IFileReader fileReader = null;
 		switch (fileType) {
-		case CSV:
+		case FileTypes.CSV:
 			fileReader = csvReader;
 			break;
-		case FIXED_POSITION:
+		case FileTypes.FIXED_POSITION:
 			fileReader = fixedPositionReader;
 			break;
-		case EXCEL:
+		case FileTypes.EXCEL:
 			fileReader = excelReader;
 			break;
 		}

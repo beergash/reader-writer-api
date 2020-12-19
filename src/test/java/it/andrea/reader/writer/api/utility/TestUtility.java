@@ -1,36 +1,24 @@
 package it.andrea.reader.writer.api.utility;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Properties;
-import java.util.SortedSet;
-import java.util.StringJoiner;
-import java.util.TreeSet;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import it.andrea.reader.writer.api.exception.FileReaderException;
 import it.andrea.reader.writer.api.exception.FileWriterException;
 import it.andrea.reader.writer.api.model.DataType;
 import it.andrea.reader.writer.api.model.DateFormat;
 import it.andrea.reader.writer.api.reader.interfaces.IFileRewriter;
-import it.andrea.reader.writer.api.reader.model.FileFeature;
-import it.andrea.reader.writer.api.reader.model.FileSheet;
-import it.andrea.reader.writer.api.reader.model.FileTrace;
-import it.andrea.reader.writer.api.reader.model.FileType;
-import it.andrea.reader.writer.api.reader.model.Matcher;
-import it.andrea.reader.writer.api.reader.model.MatchingOperator;
+import it.andrea.reader.writer.api.reader.model.*;
 import it.andrea.reader.writer.api.writer.interfaces.IReportPreaparer;
 import it.andrea.reader.writer.api.writer.model.ReportFeature;
 import it.andrea.reader.writer.api.writer.model.ReportSheet;
 import it.andrea.reader.writer.api.writer.model.ReportTrace;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 public class TestUtility {
 
@@ -110,7 +98,7 @@ public class TestUtility {
 
 	public static FileFeature getFileFeaturesByPropertiesFile(Properties props, String prefix) throws FileReaderException {
 		List<FileSheet> fileSheets = new ArrayList<FileSheet>();
-		FileFeature ff = new FileFeature(Boolean.valueOf(props.getProperty(prefix + ".header")), FileType.valueOf(props.getProperty(prefix + ".type").toUpperCase()));
+		FileFeature ff = new FileFeature(Boolean.valueOf(props.getProperty(prefix + ".header")), props.getProperty(prefix + ".type"));
 		ff.setHasFooter(Boolean.valueOf(props.getProperty(prefix + ".footer")));
 		ff.setDescription(props.getProperty(prefix + ".description"));
 		String rewriterClassName = props.getProperty(prefix + ".rewriter.className");
