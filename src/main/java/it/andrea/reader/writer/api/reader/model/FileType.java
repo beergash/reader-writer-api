@@ -11,7 +11,7 @@ public enum FileType {
 	EXCEL("excel");
 
 
-	private FileType(String description) {
+	FileType(String description) {
 		this.description = description;
 	}
 	private String description;

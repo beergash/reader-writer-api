@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import it.andrea.reader.writer.api.exception.FileReaderException;
-import it.andrea.reader.writer.api.reader.FileLoaderUtils;
+import it.andrea.reader.writer.api.utils.FileLoaderUtils;
 import it.andrea.reader.writer.api.reader.model.FileFeature;
 import it.andrea.reader.writer.api.reader.model.FileResult;
 import it.andrea.reader.writer.api.reader.model.FileSheet;
@@ -37,8 +37,12 @@ public class CsvFileReader extends TextFileReader {
 			String[] lineSplitted = line.split(s.getSeparator());
 			if (isRecordValidForSheet(lineSplitted, s.getValidationConditions())) {
 				for (FileTrace f : fields) {
-					Object value = FileLoaderUtils.convertValue(lineSplitted[Integer.valueOf(f.getPosition()) - 1].trim(), f);
-					buildData(targetObject, row, f, value);
+					try {
+						Object value = FileLoaderUtils.convertValue(lineSplitted[Integer.valueOf(f.getPosition()) - 1].trim(), f);
+						buildData(targetObject, row, f, value);
+					} catch (ArrayIndexOutOfBoundsException e) {
+						throw new FileReaderException(String.format("Can't get position index %s for line %s", f.getPosition(), line));
+					}
 				}
 				FileLoaderUtils.managesResult(result, s, row, targetObject);
 			}

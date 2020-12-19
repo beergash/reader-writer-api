@@ -1,24 +1,22 @@
 package it.andrea.reader.writer.api.writer.impl;
 
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.StringJoiner;
-import java.util.stream.Collectors;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-
 import it.andrea.reader.writer.api.exception.FileWriterException;
 import it.andrea.reader.writer.api.writer.BaseReportTextCreator;
 import it.andrea.reader.writer.api.writer.ReportUtils;
 import it.andrea.reader.writer.api.writer.interfaces.IReportPreaparer;
 import it.andrea.reader.writer.api.writer.model.ReportSheet;
 import it.andrea.reader.writer.api.writer.model.ReportTrace;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Qualifier("csv")
@@ -56,8 +54,7 @@ public class CsvReportCreator extends BaseReportTextCreator {
 				.map(cfg -> {
 					Object value = ReportUtils.findsValueByListType(sheet, record, typedRecord, cfg);
 					return ReportUtils.formatValue(value, cfg);
-				})
-				.filter(row -> !StringUtils.isEmpty(row)).collect(Collectors.joining(sheet.getSeparator()));
+				}).collect(Collectors.joining(sheet.getSeparator()));
 		if (!StringUtils.isEmpty(line)) {
 			lines.add(line);
 		}

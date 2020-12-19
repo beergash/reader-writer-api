@@ -39,22 +39,6 @@ public class TestUtility {
 	public static final String INPUT_TEST_FILES_FOLDER = "/input/";
 	public static final String OUTPUT_TEST_FILES_FOLDER = System.getProperty("user.dir") + "/src/test/resources/output/";
 
-	public static void getFieldPropertiesByHeader(String header, String separator, String prefix) {
-		String[] fields = header.split(separator);
-		for (int i = 0; i < fields.length; i++) {
-			String fieldIndex = String.valueOf(i + 1);
-			StringJoiner joiner = new StringJoiner(",");
-			String propKey = prefix + ".sheet1.field" + fieldIndex + "=";
-			joiner.add(fieldIndex);
-			joiner.add(fields[i]);
-			joiner.add(DataType.STRING.name().toLowerCase());
-			joiner.add(" ");
-			joiner.add(" ");
-			joiner.add("");
-			System.out.println(propKey + joiner.toString());
-		}
-	}
-
 	public static ReportFeature getReportFeaturesByPropertiesFile(Properties props, String prefix) throws FileWriterException {
 		List<ReportSheet> sheets = new ArrayList<ReportSheet>();
 		ReportFeature rf = new ReportFeature();
@@ -131,7 +115,7 @@ public class TestUtility {
 		ff.setDescription(props.getProperty(prefix + ".description"));
 		String rewriterClassName = props.getProperty(prefix + ".rewriter.className");
 		if (rewriterClassName != null) {
-			IFileRewriter rewriterClass = null;
+			IFileRewriter rewriterClass;
 			try {
 				rewriterClass = (IFileRewriter) Class.forName(rewriterClassName).newInstance();
 			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {

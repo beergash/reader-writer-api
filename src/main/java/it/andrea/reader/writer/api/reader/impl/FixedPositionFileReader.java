@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import it.andrea.reader.writer.api.exception.FileReaderException;
-import it.andrea.reader.writer.api.reader.FileLoaderUtils;
+import it.andrea.reader.writer.api.utils.FileLoaderUtils;
 import it.andrea.reader.writer.api.reader.model.FileFeature;
 import it.andrea.reader.writer.api.reader.model.FileResult;
 import it.andrea.reader.writer.api.reader.model.FileSheet;

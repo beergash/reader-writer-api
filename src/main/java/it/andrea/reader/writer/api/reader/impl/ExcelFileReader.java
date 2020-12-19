@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
 
 import it.andrea.reader.writer.api.exception.FileReaderException;
 import it.andrea.reader.writer.api.model.DataType;
-import it.andrea.reader.writer.api.reader.FileLoaderUtils;
+import it.andrea.reader.writer.api.utils.FileLoaderUtils;
 import it.andrea.reader.writer.api.reader.interfaces.IFileReader;
 import it.andrea.reader.writer.api.reader.model.FileFeature;
 import it.andrea.reader.writer.api.reader.model.FileResult;

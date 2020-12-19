@@ -1,4 +1,4 @@
-package it.andrea.reader.writer.api.reader;
+package it.andrea.reader.writer.api.utils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,7 +48,7 @@ public class FileLoaderUtils {
 		case DATE:
 			SimpleDateFormat formatter = new SimpleDateFormat(trace.getDateFormat());
 			try {
-				formattedValue = (value == null || "".equals(value)) ? null : formatter.parse(value);
+				formattedValue = StringUtils.isEmpty(value) ? null : formatter.parse(value);
 			} catch (ParseException e) {
 				String errorMsg = "Unable to convert date : " + value + " with format " + trace.getDateFormat();
 				log.error(errorMsg, e);

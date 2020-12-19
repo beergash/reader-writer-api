@@ -1,15 +1,13 @@
 package it.andrea.reader.writer.api.reader;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
+import it.andrea.reader.writer.api.TestConfigurator;
+import it.andrea.reader.writer.api.exception.FileReaderException;
+import it.andrea.reader.writer.api.reader.interfaces.IFileReader;
+import it.andrea.reader.writer.api.reader.model.FileFeature;
+import it.andrea.reader.writer.api.reader.model.FileResult;
+import it.andrea.reader.writer.api.utility.TestUtility;
+import it.andrea.reader.writer.api.utility.model.Person;
+import it.andrea.reader.writer.api.utils.FileReaderManager;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -23,13 +21,14 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import it.andrea.reader.writer.api.TestConfigurator;
-import it.andrea.reader.writer.api.exception.FileReaderException;
-import it.andrea.reader.writer.api.reader.interfaces.IFileReader;
-import it.andrea.reader.writer.api.reader.model.FileFeature;
-import it.andrea.reader.writer.api.reader.model.FileResult;
-import it.andrea.reader.writer.api.utility.TestUtility;
-import it.andrea.reader.writer.api.utility.model.Person;
+import java.io.IOException;
+import java.io.InputStream;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -50,8 +49,8 @@ public class CsvFileReaderTest extends TestConfigurator {
 	public void testLoadFile2Sheets() throws IOException, FileReaderException {
 		String methodName = "testLoadFile2Sheets";
 		log.info("Begin test: " + methodName);
-		List<Map<String, Object>> maleData = new LinkedList<Map<String, Object>>();
-		List<Map<String, Object>> femaleData = new LinkedList<Map<String, Object>>();
+		List<Map<String, Object>> maleData;
+		List<Map<String, Object>> femaleData;
 		final String sourceFile = TestUtility.INPUT_TEST_FILES_FOLDER + "sample2sheets.csv";
 		FileFeature fileFeature = TestUtility.getFileFeaturesByPropertiesFile(loadingProperties, "sample2sheets");
 		try (InputStream is = this.getClass().getResourceAsStream(sourceFile)) {
@@ -78,7 +77,7 @@ public class CsvFileReaderTest extends TestConfigurator {
 	public void testFileMappedToObject() throws IOException, FileReaderException {
 		String methodName = "testFileMappedToObject";
 		log.info("Begin test: " + methodName);
-		List<? extends Object> result = null;
+		List<? extends Object> result;
 		final String sourceFile = TestUtility.INPUT_TEST_FILES_FOLDER + "test_map_objects.csv";
 		FileFeature fileFeature = TestUtility.getFileFeaturesByPropertiesFile(loadingProperties, "test_map_obj");
 		try (InputStream is = this.getClass().getResourceAsStream(sourceFile)) {
@@ -100,8 +99,8 @@ public class CsvFileReaderTest extends TestConfigurator {
 	public void testLoadFile2SheetsWithRewriter() throws IOException, FileReaderException {
 		String methodName = "testLoadFile2SheetsWithRewriter";
 		log.info("Begin test: " + methodName);
-		List<Map<String, Object>> maleData = new LinkedList<Map<String, Object>>();
-		List<Map<String, Object>> femaleData = new LinkedList<Map<String, Object>>();
+		List<Map<String, Object>> maleData;
+		List<Map<String, Object>> femaleData;
 		final String sourceFile = TestUtility.INPUT_TEST_FILES_FOLDER + "test_csv_to_rewrite.csv";
 		FileFeature fileFeature = TestUtility.getFileFeaturesByPropertiesFile(loadingProperties, "csvrewriter");
 		try (InputStream is = this.getClass().getResourceAsStream(sourceFile)) {

@@ -1,4 +1,4 @@
-package it.andrea.reader.writer.api.reader;
+package it.andrea.reader.writer.api.utils;
 
 import java.io.File;
 import java.io.FileInputStream;
