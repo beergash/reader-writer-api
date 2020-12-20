@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import it.andrea.reader.writer.api.model.FileTypes;
+import it.andrea.reader.writer.api.model.FileType;
 import it.andrea.reader.writer.api.reader.model.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import it.andrea.reader.writer.api.utils.FileLoaderUtils;
  * @author Andrea Aresta
  */
 @Service
-@Qualifier(FileTypes.FIXED_POSITION)
+@Qualifier(FileType.FIXED_POSITION)
 public class FixedPositionFileReader extends TextFileReader {
 
 	private static final String INTERVAL_POSITION_CHAR_SEPARATOR = "-";

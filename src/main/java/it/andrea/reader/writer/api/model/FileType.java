@@ -1,6 +1,6 @@
 package it.andrea.reader.writer.api.model;
 
-public class FileTypes {
+public class FileType {
 
     public static final String CSV = "csv";
     public static final String FIXED_POSITION = "fixed_position";

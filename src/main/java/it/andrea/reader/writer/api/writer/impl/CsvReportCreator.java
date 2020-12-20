@@ -1,7 +1,7 @@
 package it.andrea.reader.writer.api.writer.impl;
 
 import it.andrea.reader.writer.api.exception.FileWriterException;
-import it.andrea.reader.writer.api.model.FileTypes;
+import it.andrea.reader.writer.api.model.FileType;
 import it.andrea.reader.writer.api.writer.BaseReportTextCreator;
 import it.andrea.reader.writer.api.writer.ReportUtils;
 import it.andrea.reader.writer.api.writer.interfaces.IReportPreaparer;
@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-@Qualifier(FileTypes.CSV)
+@Qualifier(FileType.CSV)
 public class CsvReportCreator extends BaseReportTextCreator {
 
 	private static final Logger log = LoggerFactory.getLogger(CsvReportCreator.class);

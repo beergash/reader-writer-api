@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import it.andrea.reader.writer.api.model.FileTypes;
+import it.andrea.reader.writer.api.model.FileType;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +20,7 @@ import it.andrea.reader.writer.api.writer.model.ReportSheet;
 import it.andrea.reader.writer.api.writer.model.ReportTrace;
 
 @Service
-@Qualifier(FileTypes.FIXED_POSITION)
+@Qualifier(FileType.FIXED_POSITION)
 public class FixedPositionReportCreator extends BaseReportTextCreator {
 
 	private static final Logger log = LoggerFactory.getLogger(FixedPositionReportCreator.class);

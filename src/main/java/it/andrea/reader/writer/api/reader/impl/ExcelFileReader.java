@@ -12,7 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import it.andrea.reader.writer.api.model.FileTypes;
+import it.andrea.reader.writer.api.model.FileType;
 import it.andrea.reader.writer.api.reader.model.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -37,7 +37,7 @@ import it.andrea.reader.writer.api.reader.interfaces.IFileReader;
  * @author Andrea Aresta
  */
 @Service
-@Qualifier(FileTypes.EXCEL)
+@Qualifier(FileType.EXCEL)
 public class ExcelFileReader implements IFileReader {
 
 	@Override

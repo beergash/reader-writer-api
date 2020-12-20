@@ -4,7 +4,7 @@ import it.andrea.reader.writer.api.exception.FileReaderException;
 import it.andrea.reader.writer.api.reader.interfaces.IFileReader;
 import it.andrea.reader.writer.api.reader.model.FileFeature;
 import it.andrea.reader.writer.api.reader.model.FileResult;
-import it.andrea.reader.writer.api.model.FileTypes;
+import it.andrea.reader.writer.api.model.FileType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -27,15 +27,15 @@ import java.util.Map;
 public class FileReaderManager {
 
 	@Autowired
-	@Qualifier(FileTypes.CSV)
+	@Qualifier(FileType.CSV)
 	private IFileReader csvReader;
 
 	@Autowired
-	@Qualifier(FileTypes.FIXED_POSITION)
+	@Qualifier(FileType.FIXED_POSITION)
 	private IFileReader fixedPositionReader;
 
 	@Autowired
-	@Qualifier(FileTypes.EXCEL)
+	@Qualifier(FileType.EXCEL)
 	private IFileReader excelReader;
 
 	/**
@@ -87,13 +87,13 @@ public class FileReaderManager {
 	private IFileReader getFileReader(String fileType) {
 		IFileReader fileReader = null;
 		switch (fileType) {
-		case FileTypes.CSV:
+		case FileType.CSV:
 			fileReader = csvReader;
 			break;
-		case FileTypes.FIXED_POSITION:
+		case FileType.FIXED_POSITION:
 			fileReader = fixedPositionReader;
 			break;
-		case FileTypes.EXCEL:
+		case FileType.EXCEL:
 			fileReader = excelReader;
 			break;
 		}

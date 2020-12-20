@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-import it.andrea.reader.writer.api.model.FileTypes;
+import it.andrea.reader.writer.api.model.FileType;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -36,7 +36,7 @@ import it.andrea.reader.writer.api.writer.model.ReportTrace;
  * @author Andrea Aresta
  */
 @Service
-@Qualifier(FileTypes.EXCEL)
+@Qualifier(FileType.EXCEL)
 public class ExcelReportCreator implements IReportWriter {
 
 	private static final Logger log = LoggerFactory.getLogger(ExcelReportCreator.class);
