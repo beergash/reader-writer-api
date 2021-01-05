@@ -14,7 +14,7 @@
 		<spring-boot.version>2.0.2.RELEASE</spring-boot.version>
 		<apache-poi.version>3.17</apache-poi.version>
 		<apache-commons-io>1.3.2</apache-commons-io>
-		<java.version>1.8</java.version>
+		<java.version>11</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
