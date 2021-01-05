@@ -1,7 +1,9 @@
 package it.beergash.reader.writer.api.writer;
 
 import it.beergash.reader.writer.api.TestConfigurator;
+import it.beergash.reader.writer.api.WriterTestConfigurator;
 import it.beergash.reader.writer.api.exception.FileWriterException;
+import it.beergash.reader.writer.api.model.FileType;
 import it.beergash.reader.writer.api.utility.TestUtility;
 import it.beergash.reader.writer.api.utility.model.Match;
 import it.beergash.reader.writer.api.utility.model.Person;
@@ -24,14 +26,12 @@ import java.util.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ComponentScan(basePackages = { "it.beergash.reader.writer.api" })
-@TestPropertySource(locations = "classpath:test.properties")
-public class ExcelWriterTest extends TestConfigurator {
+public class ExcelWriterTest extends WriterTestConfigurator {
 
 	private static final String TEST_FOLDER = System.getProperty("user.dir") + "/src/test/resources/";
 
 	@Autowired
-	@Qualifier("excel")
+	@Qualifier(FileType.EXCEL)
 	private IReportWriter excelWriter;
 
 	private List<Map<String, Object>> sheet1Data;
@@ -81,7 +81,7 @@ public class ExcelWriterTest extends TestConfigurator {
 
 	@Test
 	public void testWriteExcel() throws IOException, FileWriterException {
-		ReportFeature repFeature = TestUtility.getReportFeaturesByPropertiesFile(reportProperties, "excel1");
+		repFeature = TestUtility.getReportFeaturesByPropertiesFile(reportProperties, "excel1");
 		repFeature.setOutputDirectory(TEST_FOLDER + "output/");
 		repFeature.getSheets().get(0).setData(sheet1Data);
 		repFeature.getSheets().get(1).setData(sheet2Data);

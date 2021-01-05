@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 import it.beergash.reader.writer.api.TestConfigurator;
+import it.beergash.reader.writer.api.WriterTestConfigurator;
 import it.beergash.reader.writer.api.exception.FileWriterException;
+import it.beergash.reader.writer.api.model.FileType;
 import it.beergash.reader.writer.api.utility.TestUtility;
 import it.beergash.reader.writer.api.writer.interfaces.IReportWriter;
 import it.beergash.reader.writer.api.writer.model.ReportFeature;
@@ -18,17 +20,15 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ComponentScan(basePackages = { "it.beergash.reader.writer.api" })
-public class FixedPositionWriterTest extends TestConfigurator {
+public class FixedPositionWriterTest extends WriterTestConfigurator {
 
 	@Autowired
-	@Qualifier("fixed_position")
-	private IReportWriter excelWriter;
+	@Qualifier(FileType.FIXED_POSITION)
+	private IReportWriter reportWriter;
 
 	@Test
 	public void testWriteFixedPositionReport() throws IOException, FileWriterException {
@@ -43,10 +43,10 @@ public class FixedPositionWriterTest extends TestConfigurator {
 		row2.put("Currency", "EUR");
 		outputData.add(row1);
 		outputData.add(row2);
-		ReportFeature repFeature = TestUtility.getReportFeaturesByPropertiesFile(reportProperties, "fp1");
+		repFeature = TestUtility.getReportFeaturesByPropertiesFile(reportProperties, "fp1");
 		ReportSheet sheet = repFeature.getSheets().get(0);
 		sheet.setData(outputData);
-		excelWriter.writeReport(repFeature);
+		reportWriter.writeReport(repFeature);
 	}
 
 }

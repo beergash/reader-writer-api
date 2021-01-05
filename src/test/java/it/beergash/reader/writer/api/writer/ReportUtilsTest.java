@@ -7,6 +7,7 @@ import it.beergash.reader.writer.api.writer.model.ReportTrace;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.TestPropertySource;
@@ -15,14 +16,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.io.IOException;
 import java.time.LocalDate;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@ComponentScan(basePackages = { "it.beergash.reader.writer.api" })
-@TestPropertySource(locations = "classpath:test.properties")
+@RunWith(MockitoJUnitRunner.class)
 public class ReportUtilsTest {
 
 	@Test
-	public void testWriteDate() throws IOException, FileWriterException {
+	public void testWriteDate() throws FileWriterException {
 		ReportTrace rt = new ReportTrace();
 		rt.setInputDateFormat(DateFormat.YEAR_MONTH_DAY_DASHED);
 		rt.setOutputDateFormat(DateFormat.DAY_MONTH_YEAR_SLASHED);

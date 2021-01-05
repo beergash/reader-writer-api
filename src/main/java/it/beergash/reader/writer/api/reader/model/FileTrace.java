@@ -16,6 +16,12 @@ public class FileTrace {
 	public FileTrace() {
 	}
 
+	public FileTrace(String position, String fieldJavaAttribute) {
+		super();
+		this.position = position;
+		this.fieldJavaAttribute = fieldJavaAttribute;
+	}
+
 	public FileTrace(String position, String label, DataType dataType) {
 		super();
 		this.position = position;

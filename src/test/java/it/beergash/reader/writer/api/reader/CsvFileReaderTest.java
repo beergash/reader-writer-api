@@ -2,6 +2,7 @@ package it.beergash.reader.writer.api.reader;
 
 import it.beergash.reader.writer.api.TestConfigurator;
 import it.beergash.reader.writer.api.exception.FileReaderException;
+import it.beergash.reader.writer.api.model.FileType;
 import it.beergash.reader.writer.api.reader.interfaces.IFileReader;
 import it.beergash.reader.writer.api.reader.model.FileFeature;
 import it.beergash.reader.writer.api.reader.model.FileResult;
@@ -32,12 +33,10 @@ import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ComponentScan(basePackages = { "it.beergash.reader.writer.api" })
-@TestPropertySource(locations = "classpath:test.properties")
 public class CsvFileReaderTest extends TestConfigurator {
 
 	@Autowired
-	@Qualifier("csv")
+	@Qualifier(FileType.CSV)
 	private IFileReader fileReader;
 
 	@Autowired

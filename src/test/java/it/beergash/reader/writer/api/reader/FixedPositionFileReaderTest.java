@@ -30,8 +30,6 @@ import it.beergash.reader.writer.api.TestConfigurator;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ComponentScan(basePackages = { "it.beergash.reader.writer.api" })
-@TestPropertySource(locations = "classpath:test.properties")
 public class FixedPositionFileReaderTest extends TestConfigurator {
 
 	@Autowired

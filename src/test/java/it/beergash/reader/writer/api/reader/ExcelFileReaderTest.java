@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import it.beergash.reader.writer.api.exception.FileReaderException;
+import it.beergash.reader.writer.api.model.FileType;
 import it.beergash.reader.writer.api.reader.interfaces.IFileReader;
 import it.beergash.reader.writer.api.reader.model.FileFeature;
 import it.beergash.reader.writer.api.reader.model.FileResult;
@@ -33,12 +34,10 @@ import it.beergash.reader.writer.api.TestConfigurator;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ComponentScan(basePackages = { "it.beergash.reader.writer.api" })
-@TestPropertySource(locations = "classpath:test.properties")
 public class ExcelFileReaderTest extends TestConfigurator {
 
 	@Autowired
-	@Qualifier("excel")
+	@Qualifier(FileType.EXCEL)
 	private IFileReader fileReader;
 
 	private static final Logger log = LoggerFactory.getLogger(ExcelFileReaderTest.class);

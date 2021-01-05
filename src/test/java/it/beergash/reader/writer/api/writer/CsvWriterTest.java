@@ -9,12 +9,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import it.beergash.reader.writer.api.WriterTestConfigurator;
 import it.beergash.reader.writer.api.exception.FileWriterException;
+import it.beergash.reader.writer.api.model.FileType;
 import it.beergash.reader.writer.api.utility.TestUtility;
 import it.beergash.reader.writer.api.utility.model.Person;
 import it.beergash.reader.writer.api.writer.interfaces.IReportWriter;
 import it.beergash.reader.writer.api.writer.model.ReportFeature;
 import it.beergash.reader.writer.api.writer.model.ReportSheet;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,15 +31,14 @@ import it.beergash.reader.writer.api.TestConfigurator;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ComponentScan(basePackages = { "it.beergash.reader.writer.api" })
-public class CsvWriterTest extends TestConfigurator {
+public class CsvWriterTest extends WriterTestConfigurator {
 
 	@Autowired
-	@Qualifier("csv")
+	@Qualifier(FileType.CSV)
 	private IReportWriter fileWriter;
 
-	private List<Map<String, Object>> outputData = new ArrayList<Map<String, Object>>();
-	private List<Person> persons = new ArrayList<Person>();
+	private List<Map<String, Object>> outputData = new ArrayList<>();
+	private List<Person> persons = new ArrayList<>();
 
 	@Before
 	public void prepareData() {
@@ -71,7 +73,7 @@ public class CsvWriterTest extends TestConfigurator {
 
 	@Test
 	public void testWriteCsvReport() throws IOException, FileWriterException {
-		ReportFeature repFeature = TestUtility.getReportFeaturesByPropertiesFile(reportProperties, "csv1");
+		repFeature = TestUtility.getReportFeaturesByPropertiesFile(reportProperties, "csv1");
 		ReportSheet sheet = repFeature.getSheets().get(0);
 		sheet.setData(outputData);
 		fileWriter.writeReport(repFeature);
@@ -79,7 +81,7 @@ public class CsvWriterTest extends TestConfigurator {
 
 	@Test
 	public void testWriteCsvReportWithTypedObject() throws IOException, FileWriterException {
-		ReportFeature repFeature = TestUtility.getReportFeaturesByPropertiesFile(reportProperties, "csv1_typed_obj");
+		repFeature = TestUtility.getReportFeaturesByPropertiesFile(reportProperties, "csv1_typed_obj");
 		ReportSheet sheet = repFeature.getSheets().get(0);
 		sheet.setTypedData(persons);
 		fileWriter.writeReport(repFeature);
