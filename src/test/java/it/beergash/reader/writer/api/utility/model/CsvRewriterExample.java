@@ -23,8 +23,8 @@ public class CsvRewriterExample implements IFileRewriter {
 	public File reWriteFile(InputStream sourceFile, FileFeature fileFeature) throws FileReaderException {
 		File file = new File(System.getProperty("user.dir") + "/src/test/resources/input/rewriter/"
 				+ fileFeature.getDescription() + ".txt");
-		BufferedWriter bw = null;
-		String line = null;
+		BufferedWriter bw;
+		String line;
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(sourceFile, StandardCharsets.UTF_8))) {
 			/// skipping first two rows like in the example file
 			br.readLine();
