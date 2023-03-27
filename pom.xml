@@ -21,7 +21,7 @@
 		<junit.version>4.12</junit.version>
 		<mockito.version>2.19.0</mockito.version>
 
-		<itextpdf.version>5.5.13.1</itextpdf.version>
+		<itextpdf.version>5.5.13.3</itextpdf.version>
 	</properties>
 
 	<dependencyManagement>
