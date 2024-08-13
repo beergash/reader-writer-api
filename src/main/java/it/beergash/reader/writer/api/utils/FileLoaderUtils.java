@@ -1,7 +1,6 @@
 package it.beergash.reader.writer.api.utils;
 
 import it.beergash.reader.writer.api.exception.FileReaderException;
-import it.beergash.reader.writer.api.reader.impl.ExcelFileReader;
 import it.beergash.reader.writer.api.reader.model.FileResult;
 import it.beergash.reader.writer.api.reader.model.FileSheet;
 import it.beergash.reader.writer.api.reader.model.FileTrace;
@@ -27,7 +26,7 @@ import java.util.Map;
  */
 public class FileLoaderUtils {
 
-	private static final Logger log = LoggerFactory.getLogger(ExcelFileReader.class);
+	private static final Logger log = LoggerFactory.getLogger(FileLoaderUtils.class);
 
 	/**
 	 * converts the value read from file into the data type provided
